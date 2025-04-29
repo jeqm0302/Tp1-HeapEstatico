@@ -5,22 +5,27 @@ import interfaces.HeapCPTDA;
 // Adaptación para insertar colas con prioridad mediante un Max Heap Estático
 
 public class ColaPrioridad implements HeapCPTDA {
+    
+    // Inicializa todas las variables y clases que vamos a utilizar 
+    int[] valores; // Array que almacena los valores
+    int[] prioridades; // Array que almacena los numeros de prioridad que tienen cada nro.
+    int cant; // Cont. de elementos que tiene el heap 
+    int tamLimite; // Tamaño maximo que tiene el heap
 
-    int[] valores;
-    int[] prioridades;
-    int cant;
-    int tamLimite;
-
-    public void inicializarHeap() {
-        tamLimite = 20;
-        valores = new int[tamLimite + 1]; // Se asigna una cantidad de valores limite al heap
-        prioridades = new int[tamLimite + 1]; // Se crea un array para las prioridades
-        cant = 0; // Heap vacío
+    // Metodos a utilizar 
+    public void inicializarHeap() { // Es donde se inicializa el heap 
+        tamLimite = 20; // Establecemos el tamaño que va a tener el heap 
+        valores = new int[tamLimite + 1]; // Asignacion de cant de valores limite al heap
+        prioridades = new int[tamLimite + 1]; //  Crea el array para las prioridades
+        // tamLimite + 1 Se utiliza para establcecer el indice en 1 y no en cero
+        cant = 0; //  Valor inicial del heap (Heap vacío)
     }
 
     public void insertar(int valor, int prioridad) {
-        if (cant == tamLimite) {
+        if (cant == tamLimite) { // En este verifica que la cantidad de elementos que se estan ingresando al heap no 
+            // superen el tamaño del heap
             System.out.println("Limite del heap alcanzado");
+            // Muestra un mensaje donde (Cant == tamLimite)
             return;
         }
 
@@ -28,8 +33,10 @@ public class ColaPrioridad implements HeapCPTDA {
         valores[cant] = valor; // Se asigna el valor al elemento del tamaño actual
         prioridades[cant] = prioridad; // Se asigna la prioridad de dicho valor a su mismo índice pero en otro array
         
+        //Metodo privado que restaura la propiedad del Max heaps
         heapifyUp(); // Se asegura de que el elemento y su prioridad se mueva hacia arriba hasta que sea mayor que su padre
     }
+    
     
     public int raiz() { // Se devuelve el valor de la raíz (en este caso el máximo). Si el heap esta vacío, se devuelve -1 
         if (cant == 0) {

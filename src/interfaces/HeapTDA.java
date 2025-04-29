@@ -12,3 +12,14 @@ public interface HeapTDA { // Solo trabaja con numeros enteros
     int tamaño(); // Devuelve la cantidad de elementos
     void mostrarHeap(); // Mostrar todos los elementos del heap
 }
+
+//+++Indices++++++
+//void --> Se utiliza para indicar que un método no devuelve ningún valor. 
+//int--> Indica que un método devuelve valores enteros
+//boolean--> Indica que vuelve valores booleanos
+
+// Conceptos 
+// Array-> estructura de datos que permite almacenar múltiples valores 
+// del mismo tipo en una sola variable.
+// Nodo-> Es como un paquete que vamos a usar para ingresar datos 
+
