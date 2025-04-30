@@ -2,6 +2,7 @@ package implementaciones;
 
 import interfaces.HeapCPTDA;
 
+// En los max Heaps los que tiene menor prioridad son los que tiene mayor importancia 
 // Adaptación para insertar colas con prioridad mediante un Max Heap Estático
 
 public class ColaPrioridad implements HeapCPTDA {
@@ -37,7 +38,7 @@ public class ColaPrioridad implements HeapCPTDA {
         heapifyUp(); // Se asegura de que el elemento y su prioridad se mueva hacia arriba hasta que sea mayor que su padre
     }
     
-    
+    //Devuelve el valor de la raíz del heap (el elemento con la mayor prioridad).
     public int raiz() { // Se devuelve el valor de la raíz (en este caso el máximo). Si el heap esta vacío, se devuelve -1 
         if (cant == 0) {
             return -1;
@@ -45,6 +46,9 @@ public class ColaPrioridad implements HeapCPTDA {
         return valores[1];
     }
 
+    //Elimina el elemento con la mayor prioridad (la raíz).
+    //Decrementa el contador "cant"
+    //
     public void quitar() {
         if (cant == 0) {return;}
 
@@ -55,12 +59,14 @@ public class ColaPrioridad implements HeapCPTDA {
         heapifyDown(); // Se ordena para que se restaure la propiedad de max-heap, asegurando que la prioridad del elemento sea más grande que sus hijos
     }
 
+    //Devuelve el valor del padre de un nodo dado 
     public int padre(int indice) {
         if (indice <= 1 || indice > cant) { return -1; }
         int padreInd = indice / 2; // Calcular el índice del padre
         return valores[padreInd]; // Se devuelve el valor del padre
     }
     
+    //Devuelve el valor de la hijo izquierda de un nodo dado 
     public int hijoIzq(int indice) {
         if ( indice <= 0 || indice > cant) { return -1; }
         int hijo = indice * 2; // Calcular el índice del hijo izquierdo
@@ -68,6 +74,7 @@ public class ColaPrioridad implements HeapCPTDA {
         return valores[hijo]; // Se devuelve el valor del hijo izquierdo
     }
     
+    //Devuelve el valor de la hijo derecha de un nodo dado
     public int hijoDer(int indice) {
         if ( indice <= 0 || indice > cant) { return -1; }
         int hijo = indice * 2 + 1; // Calcular el índice del hijo derecho
@@ -75,28 +82,36 @@ public class ColaPrioridad implements HeapCPTDA {
         return valores[hijo]; // Se devuelve el valor del hijo derecho
     } 
     
+    // Si el índice está fuera de rango, devuelven -1
+
+    //Esta funcion ve si el heap esta lleno no Vacio 
     public boolean heapVacio() {
         return (cant == 0); // Solo devuelve true si no hay elementos en el heap
     }
-    
+    // Devuelve la "cant"/tamaño del heap
     public int tamaño() {
         return cant; // Devuelve la cantidad que se incrementa solo cuando se insertan valores
     } 
-
+    
+    // Manera de visualizar los elementos dentro de un heap 
     public void mostrarHeap() {
         for (int i = 1; i <= cant; i++) {
             System.out.println("[" + i + "] Número: " + valores[i] + " - Prioridad: " + prioridades[i]);
         }
     }
 
+
     // Metodos privados que son necesarios para los públicos 
 
-    private void heapifyUp() { // Se asegura de que el elemento se mueva hacia arriba hasta que sea mayor que su padre segun su prioridad
+
+    // Se asegura de que el elemento se mueva hacia arriba hasta que sea mayor que su padre segun su prioridad
+    private void heapifyUp() { 
         int indice = cant;
 
         while (indice > 1) { // Se recorre el heap hacia arriba desde el elemento recién insertado
             int padreInd = indice / 2; // Se obtiene el indice del padre
-    
+            
+
             if (prioridades[indice] < prioridades[padreInd]) { // Se entra al if si la prioridad del hijo es mayor (en números sería menor) al del padre y se intercambian en ambos arrays
                 int aux = valores[indice];
                 valores[indice] = valores[padreInd];
@@ -113,7 +128,13 @@ public class ColaPrioridad implements HeapCPTDA {
         }
     }
 
-    private void heapifyDown() { // Se ordena para que se restaure la propiedad de max-heap, asegurando que el elemento tenga mayor prioridad que sus hijos.
+    //Recorre el heap hacia arriba desde el nodo recién insertado.
+    //Si la prioridad del nodo es mayor (en términos de prioridad, menor numéricamente) que la de su padre, intercambia sus posiciones.
+    //Se detiene cuando el nodo está en su posición correcta.
+
+    
+    // Se ordena para que se restaure la propiedad de max-heap, asegurando que el elemento tenga mayor prioridad que sus hijos.
+    private void heapifyDown() { 
         int indice = 1;  // Se comienza en la raíz 
         
         while (indice <= cant / 2) {  // Mientras el elemento tenga hijos

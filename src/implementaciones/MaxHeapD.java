@@ -2,6 +2,8 @@ package implementaciones;
 
 import interfaces.HeapTDA;
 
+// Se inicializa el nodo que contiene los nodos de los valores ingresados y los nodos anteriores y los siguientes 
+//(Listas doblemente enlazadas)
 public class MaxHeapD implements HeapTDA {
     class Nodo {
         int valor;
@@ -20,9 +22,12 @@ public class MaxHeapD implements HeapTDA {
         Nodo nuevo = new Nodo(); // Se crea un nodo para el nuevo valor y se asigna a una variable 
         nuevo.valor = valor; 
 
-        if (primero == null) { // Si el heap esta vacío, el nuevo nodo se asigna como primero
+        // En este if, si el nodo se encuentra vacio, el primer dato que esta en el nodo se asigna como el primero
+        if (primero == null) { 
             primero = nuevo;
-        } else { // Si no, se recorre todo el heap hasta el final mediante un nodo auxiliar 
+
+         // Si no, se recorre todo el heap hasta el final mediante un nodo auxiliar, para colocar el nuevo valor  
+        } else { 
             Nodo aux = primero;
             while (aux.sig != null) {
                 aux = aux.sig;
@@ -30,32 +35,39 @@ public class MaxHeapD implements HeapTDA {
             aux.sig = nuevo; // Se enlaza el nuevo nodo
             nuevo.ant = aux;
         }
+
         cant++; // Se suma 1 a la cantidad de nodos en el heap
         heapifyUp(); // Se asegura de que el nodo se mueva hacia arriba hasta que sea mayor que su padre
     }
 
-    public int raiz() { // Se devuelve el valor de la raíz (en este caso el máximo). Si el heap esta vacío, se devuelve -1 
+    // Se devuelve el valor de la raíz (en este caso el máximo). Si el heap esta vacío, se devuelve -1
+    public int raiz() {  
         if (primero != null) { 
             return primero.valor; 
         }
         return -1;
     }
 
+    // Elimina el nodo cone l valor mas alto (la raíz)
     public void quitar() {
+        // Si el heap está vacío, no hay nada que quitar
         if (cant == 0) {
-            return; // Si el heap está vacío, no hay nada que quitar
+            return; 
         }
-    
-        if (cant == 1) { // Si el heap tiene solo un elemento, se elimina y se reduce el tamaño
+        
+        // Si el heap tiene solo un elemento, se elimina y se reduce el tamaño
+        if (cant == 1) { 
             primero = null;
             cant--;
             return;
         }
-    
-        Nodo ultimoNodo = obtenerNodoPorIndice(cant); // Se sobrescribe la raíz con el último nodo insertado 
+        
+        // Se sobrescribe la raíz con el último nodo insertado
+        Nodo ultimoNodo = obtenerNodoPorIndice(cant);
         primero.valor = ultimoNodo.valor;
     
-        if (ultimoNodo == primero) { // En caso de que se sustituya la raíz por el último nodo y el último nodo sea igual al primero (el heap tiene un solo nodo), se deja el heap vacío
+        if (ultimoNodo == primero) { // En caso de que se sustituya la raíz por el último nodo y el último nodo sea igual 
+            // al primero (el heap tiene un solo nodo), se deja el heap vacío
             primero = null;
         } else {
             ultimoNodo.ant.sig = null; // Se elimina la referencia desde el nodo anterior al último nodo, desconectando el último nodo de la lista y convirtiendo su anterior en el nuevo último
@@ -67,26 +79,31 @@ public class MaxHeapD implements HeapTDA {
     }
 
     public int padre(int indice) {
-        if (indice <= 1 || indice > cant) { return -1; }
-        int padreInd = indice / 2; // Calcular el índice del padre
-        Nodo aux = obtenerNodoPorIndice(padreInd); // Devuelve el nodo en dicho índice
-        if (aux == null) { return -1; }
+        if (indice <= 1 || indice > cant) { return -1; } // If de verificación para ver si el indice esta dentro del heap
+        int padreInd = indice / 2; // Calcular el índice del padre (Buscar el indice del padre)
+        Nodo aux = obtenerNodoPorIndice(padreInd); // Toma el nodo con dicho padre 
+        if (aux == null) { return -1; } // Esto verifica que si el indice ingresado se encuentra 
         return aux.valor; // Se devuelve el valor del nodo
     }
     
-    public int hijoIzq(int indice) {
+    public int hijoIzq(int indice) { 
+        //If de verificación para ver si el indice esta dentro del heap
         if ( indice <= 0 || indice > cant) { return -1; }
+        
+        // Calcula el indice del nodo izquierdo 
         int hijo = indice * 2; // Calcular el índice del hijo izquierdo
         Nodo aux = obtenerNodoPorIndice(hijo); // Devuelve el nodo en dicho índice
         if (aux == null) { return -1; }
         return aux.valor; // Se devuelve el valor del nodo
     }
+
+    // " || " representa el operador logico "OR"
     
     public int hijoDer(int indice) {
         if ( indice <= 0 || indice > cant) { return -1; }
         int hijo = indice * 2 + 1; // Calcular el índice del hijo derecho
         Nodo aux = obtenerNodoPorIndice(hijo); // Devuelve el nodo en dicho índice
-        if (aux == null) { return -1; }
+        if (aux == null) { return -1; } // Esto verifica que si el indice ingresado se encuentra
         return aux.valor; // Se devuelve el valor del nodo
     } 
 
@@ -155,7 +172,7 @@ public class MaxHeapD implements HeapTDA {
             indice = mayor; // El nuevo nodo a comprobar es el del anteriormente hijo que subió en el árbol binario
         }
     }
-
+    // Recorre la lista desde el primer nodo hasta encontrar el nodo en el índice especificado.
     private Nodo obtenerNodoPorIndice(int indice) { // Se devuelve un tipo nodo
         Nodo aux = primero; 
         int cont = 1;
