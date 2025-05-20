@@ -1,4 +1,3 @@
-// Conjunto con una lista enlñazada dinamica 
 package Implementaciones;
 
 import Interfaces.ConjuntoTDA;
@@ -12,6 +11,7 @@ public class ConjuntoLD implements ConjuntoTDA {
 	
 	Nodo origen;
 	
+	@Override
 	public void inicializarConjunto() {
 		origen = null;
 	}
